@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import eslintPluginTailwindcss from 'eslint-plugin-tailwindcss';
 import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
@@ -19,6 +20,24 @@ export default tseslint.config(
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
+  {
+    ...eslintPluginTailwindcss.configs.recommended,
+    settings: {
+      tailwindcss: {
+        cssConfigPath: './src/entrypoints/popup/style.css',
+      },
+    },
+    rules: {
+      ...eslintPluginTailwindcss.configs.recommended.rules,
+      'tailwindcss/classnames-order': 'off',
+      'tailwindcss/no-custom-classname': [
+        'warn',
+        {
+          whitelist: ['logo', 'react', 'card', 'read-the-docs'],
+        },
+      ],
+    },
+  },
   {
     files: sourceFiles,
     languageOptions: {
