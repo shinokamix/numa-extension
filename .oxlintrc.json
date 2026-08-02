@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "jsx-a11y", "import", "unicorn", "oxc", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "rules": {
+    "import/no-absolute-path": "off",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
+    "react/react-in-jsx-scope": "off"
+  },
+  "ignorePatterns": [".output/**", ".wxt/**"]
+}

@@ -1,8 +1,8 @@
 {
   "name": "numa-extension",
-  "description": "Translate selected text and ask AI about it.",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "description": "Translate selected text and ask AI about it.",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -11,7 +11,14 @@
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
-    "compile": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint --deny-warnings .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:run",
     "postinstall": "wxt prepare"
   },
   "dependencies": {
@@ -22,7 +29,11 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@wxt-dev/module-react": "^1.1.5",
-    "typescript": "^5.9.3",
+    "lefthook": "^2.1.10",
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10",
     "web-ext": "^10.5.0",
     "wxt": "^0.21.3"
   }
