@@ -52,8 +52,6 @@ entrypoints → shared
 
 A feature is a user-facing capability, such as `translate-selection`, `ask-ai`, or `settings`.
 
-A small feature can start as a single file. When it grows, organize it by responsibility:
-
 ```text
 features/translate-selection/
 ├── ui/
