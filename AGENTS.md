@@ -23,7 +23,7 @@ Use `pnpm test:run -- <file-or-filter>` for a targeted test. Use the Firefox var
 
 - `src/` — extension source code
 - `src/entrypoints/` — WXT entrypoints, currently including the popup
-- `tests/` — Vitest tests
+- Test files — Vitest tests colocated with the code they cover
 - `public/` — static assets
 - `wxt.config.ts` — WXT and manifest configuration
 - `package.json` — scripts and dependencies
@@ -36,8 +36,12 @@ Use `pnpm test:run -- <file-or-filter>` for a targeted test. Use the Firefox var
 - Keep changes focused and follow the existing WXT structure.
 - Treat `package.json`, `wxt.config.ts`, `.oxfmtrc.json`, and `.oxlintrc.json` as authoritative.
 - Use Oxfmt and Oxlint instead of bypassing formatting or lint rules.
-- Add or update tests when changing behavior; keep tests under `tests/`.
+- Add or update tests when changing behavior; colocate them with the code they cover.
 - Avoid adding dependencies or changing tooling configuration without a clear reason.
+
+## Architecture
+
+Read [docs/architecture.md](docs/architecture.md) before changing the project structure. Keep it updated when changing architectural boundaries.
 
 ## Extension Safety
 

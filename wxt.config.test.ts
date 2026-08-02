@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import config from '../wxt.config';
+import config from './wxt.config';
 
 describe('WXT config', () => {
   it('defines the Numa extension metadata', () => {
