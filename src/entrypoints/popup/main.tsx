@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import { App } from './App.tsx';
 
-import './style.css';
+import '@/shared/styles/globals.css';
 
 const root = document.querySelector('#root');
 

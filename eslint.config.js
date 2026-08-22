@@ -24,7 +24,7 @@ export default tseslint.config(
     ...eslintPluginTailwindcss.configs.recommended,
     settings: {
       tailwindcss: {
-        cssConfigPath: './src/entrypoints/popup/style.css',
+        cssConfigPath: './src/shared/styles/globals.css',
       },
     },
     rules: {
@@ -98,6 +98,17 @@ export default tseslint.config(
                   element: {
                     types: { anyOf: ['feature', 'shared'] },
                     fileInternalPath: ['index.{js,jsx,ts,tsx}', '**/index.{js,jsx,ts,tsx}'],
+                  },
+                },
+              },
+            },
+            {
+              from: { element: { type: 'entrypoint' } },
+              allow: {
+                to: {
+                  element: {
+                    type: 'shared',
+                    captured: { module: 'styles' },
                   },
                 },
               },
@@ -295,7 +306,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/features/*/model/**/*.{js,jsx,ts,tsx}', 'src/shared/lib/**/*.{js,jsx,ts,tsx}'],
+    files: ['src/features/*/model/**/*.{js,jsx,ts,tsx}', 'src/shared/utils/**/*.{js,jsx,ts,tsx}'],
     rules: {
       'no-restricted-globals': [
         'error',

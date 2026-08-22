@@ -30,7 +30,8 @@ src/
     ├── components/
     ├── hooks/
     ├── api/
-    ├── lib/
+    ├── utils/
+    ├── styles/
     └── types/
 ```
 
@@ -85,7 +86,8 @@ Within a feature:
 - `components` — generic UI components;
 - `hooks` — reusable hooks;
 - `api` — shared integrations, including external APIs, messaging, storage, and browser adapters;
-- `lib` — small, pure utilities;
+- `utils` — small, pure utilities organized as modules with local public APIs;
+- `styles` — shared design tokens and global UI styles imported by UI entrypoints;
 - `types` — types shared by independent modules.
 
 Keep feature-specific code in the feature. Move code to `shared` only when it has at least two independent consumers.

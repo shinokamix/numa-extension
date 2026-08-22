@@ -8,5 +8,5 @@
   "endOfLine": "lf",
   "plugins": ["prettier-plugin-tailwindcss"],
   "tailwindFunctions": ["cn", "cva", "clsx", "twMerge", "twJoin"],
-  "tailwindStylesheet": "./src/entrypoints/popup/style.css"
+  "tailwindStylesheet": "./src/shared/styles/globals.css"
 }

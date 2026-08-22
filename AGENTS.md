@@ -43,6 +43,10 @@ Use `pnpm test:run -- <file-or-filter>` for a targeted test. Use the Firefox var
 
 Read [docs/architecture.md](docs/architecture.md) before changing the project structure. Keep it updated when changing architectural boundaries.
 
+## Design System
+
+Read [DESIGN.md](DESIGN.md) before adding or modifying UI components, design tokens, or shadcn configuration.
+
 ## Extension Safety
 
 Ask before changing manifest permissions, host permissions, authentication, external services, security-sensitive behavior, dependencies, or build targets.
