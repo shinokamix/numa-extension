@@ -69,6 +69,12 @@ Do not add redundant `ui`, vendor-specific, or nested `export` directories. Do n
 
 Registry components are project-owned after installation. Registry CLIs may generate flat files at the configured alias; move those files into the module structure immediately and adjust imports as needed.
 
+## Hooks
+
+Source-install generic reusable hooks through SiberiaCanCode useverse using `reactuse.json`. Add only hooks with an immediate use case, then organize each under `src/shared/hooks/<hook-name>/` with its own `index.ts`. Remove the generated global `src/shared/hooks/index.ts` barrel and import hooks from their module path, for example `@/shared/hooks/useDisclosure`.
+
+Source-installed hooks are project-owned code. Refresh one deliberately with `pnpm dlx useverse@latest add <hook-name> --overwrite`, review the diff, and preserve project formatting and lint rules. Keep feature-specific orchestration hooks with their feature rather than moving them into shared.
+
 ## Updating the system
 
 When a change modifies shadcn configuration, shared tokens, or component-placement rules, update this document and the corresponding source files together.
