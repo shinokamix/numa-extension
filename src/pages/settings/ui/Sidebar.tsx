@@ -3,7 +3,7 @@
 // 1. Removed cookie persistence so state remains local.
 // 2. Fixed the primitive to Numa's left inset layout with desktop icon collapse and a mobile sheet.
 // 3. Removed unused input, skeleton, rail, action, badge, and nested-menu APIs.
-// 4. Replaced shadcn useIsMobile with the page-local ReactUse useMediaQuery source.
+// 4. Replaced shadcn useIsMobile with the shared ReactUse useMediaQuery source.
 // 5. Removed the unused React Server Components directive.
 // 6. Adjusted the source to project formatting and lint rules.
 
@@ -11,8 +11,8 @@ import * as React from 'react';
 import { PanelLeftIcon } from 'lucide-react';
 import { Slot } from 'radix-ui';
 
-import { useMediaQuery } from '../lib/useMediaQuery';
 import { cn } from '@/shared/lib/cn';
+import { useMediaQuery } from '@/shared/lib/use-media-query';
 import { Button } from '@/shared/ui/Button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './Sheet';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './Tooltip';

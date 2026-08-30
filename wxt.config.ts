@@ -22,5 +22,6 @@ export default defineConfig({
   manifest: {
     name: 'Numa',
     description: 'Translate selected text and ask AI about it.',
+    permissions: ['storage'],
   },
 });
