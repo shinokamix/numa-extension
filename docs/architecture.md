@@ -1,115 +1,45 @@
 # Numa Architecture
 
-Numa uses WXT's file-based entrypoints with a lightweight, feature-oriented structure.
+Numa uses Feature-Sliced Design (FSD) within WXT's browser-extension structure. WXT runtime entrypoints are the App-level composition roots; there is no parallel `src/app` layer.
 
 ## Runtime boundaries
 
-| Context      | Responsibility                                                  |
-| ------------ | --------------------------------------------------------------- |
-| `popup`      | React UI and popup actions                                      |
-| `content`    | Page integration, text selection, overlay UI, and DOM access    |
-| `background` | Messaging, API requests, storage, permissions, and coordination |
+The current UI runtime is the options page mounted by `src/entrypoints/options/main.tsx`. It owns application composition only; product behavior, persistence, messaging, and provider integrations have not been implemented yet.
 
-Each entrypoint owns its runtime context. Keep entrypoint-specific helpers inside its directory; do not put helpers directly in `src/entrypoints`.
-
-## Project structure
-
-The project uses `srcDir: 'src'`; WXT discovers entrypoints in `src/entrypoints`.
+## Current structure
 
 ```text
 src/
 ├── entrypoints/
-│   ├── popup/
-│   ├── content/
-│   └── background/
-├── features/
-│   ├── translate-selection/
-│   ├── ask-ai/
-│   └── settings/
-└── shared/
-    ├── components/
-    ├── hooks/
-    ├── api/
-    ├── utils/
-    ├── styles/
-    └── types/
+│   └── options/
+│       ├── router/ # Options-only route and section composition
+│       └── ui/     # Options-only settings layout
+└── shared/         # Business-agnostic libraries, styles, and UI
 ```
+
+Only create an FSD layer or slice when it has a current responsibility. The project intentionally has no empty Pages, Widgets, Features, or Entities layers.
 
 ## Dependency direction
 
-```text
-entrypoints → features → shared
-entrypoints → shared
-```
+The options entrypoint may import its local runtime modules and focused public APIs from Shared. Shared must remain independent of entrypoints and product-specific behavior.
 
-- `shared` must not import `features` or `entrypoints`.
-- Features must not import code from a specific entrypoint.
-- Entrypoints compose features and connect them to the runtime context.
-- Keep feature models independent of React and the DOM where practical.
-- Keep browser APIs, network requests, and other side effects at system boundaries.
-- Avoid direct feature-to-feature dependencies.
+Shared exposes focused module APIs such as `src/shared/ui/Button/index.ts` and `src/shared/lib/cn/index.ts`; it has no global layer barrel. Internal module files use relative imports and do not import back through their own barrel.
 
-## Features
+## Ownership
 
-A feature is a user-facing capability, such as `translate-selection`, `ask-ai`, or `settings`.
+### Options entrypoint
 
-```text
-features/translate-selection/
-├── ui/
-│   └── TranslateButton/
-│       ├── TranslateButton.tsx
-│       ├── TranslateButton.test.tsx
-│       └── index.ts
-├── model/
-│   └── translate.ts
-└── api/
-    └── translate.ts
-```
+- `src/entrypoints/options/main.tsx` mounts the router and loads global styles.
+- `src/entrypoints/options/router/optionsRouter.tsx` creates the route tree.
+- `src/entrypoints/options/router/settingsSections.ts` owns the visible section registry.
+- `src/entrypoints/options/ui/OptionsLayout.tsx` owns the settings navigation shell and router outlet.
 
-- `ui` contains presentation code;
-- `model` contains state, use cases, and feature logic;
-- `api` contains feature-specific integration boundaries.
+The current default route intentionally contains no product settings implementation.
 
-These layers are optional. UI used by one entrypoint may stay next to that entrypoint.
+### Shared
 
-Within a feature:
+`src/shared` contains business-agnostic UI primitives, hooks, utilities, and global styles. UI entrypoints import global styles through `src/shared/styles/index.ts`. Shared UI and library modules expose local `index.ts` files and do not use global barrels.
 
-- `ui` may depend on `model`;
-- `model` may depend on feature `api` and `shared`;
-- feature `api` may depend on `shared`;
-- feature code must not depend on an entrypoint.
+## Architecture enforcement
 
-## Shared modules
-
-`shared` contains code used by multiple independent features:
-
-- `components` — generic UI components;
-- `hooks` — reusable hooks;
-- `api` — shared integrations, including external APIs, messaging, storage, and browser adapters;
-- `utils` — small, pure utilities organized as modules with local public APIs;
-- `styles` — shared design tokens and global UI styles imported by UI entrypoints;
-- `types` — types shared by independent modules.
-
-Keep feature-specific code in the feature. Move code to `shared` only when it has at least two independent consumers.
-
-## Module structure and exports
-
-Give each reusable component, hook, or module its own directory when it may need tests, styles, types, or related files. Keep those files together.
-
-Use the directory's `index.ts` as the module's public API:
-
-```ts
-export { Button } from './Button';
-export type { ButtonProps } from './Button';
-```
-
-Use named exports. Avoid a global `src/index.ts` barrel. Internal files should import each other directly; consumers should import from the module's `index.ts`.
-
-## Cross-context communication
-
-```text
-content → typed message → background → API / storage → result
-popup  ────────────────────┘
-```
-
-Content owns page integration and the DOM. Popup owns its UI. Background owns external integrations and coordination.
+Run `pnpm lint:arch` for FSD structure and public-API checks with Steiger. ESLint enforces import boundaries, browser-global restrictions, cycles, React, accessibility, and TypeScript quality. `pnpm check` runs formatting, ESLint, Steiger, TypeScript, and tests.

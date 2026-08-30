@@ -17,7 +17,7 @@ Use these settings in `components.json`:
 | Tailwind prefix         | none                                  |
 | Tailwind config         | none; the project uses Tailwind CSS 4 |
 
-Both shadcn component aliases resolve to `@/shared/components`. The shadcn utility alias resolves directly to `@/shared/utils/cn`. The project does not use a generic `lib` alias.
+Both shadcn component aliases resolve to `@/shared/ui`. The shadcn utility alias resolves directly to `@/shared/lib/cn`. The project does not use a generic `lib` alias.
 
 ## Tokens
 
@@ -57,23 +57,23 @@ Avoid arbitrary values when a standard token or utility exists.
 
 Organize components by reuse, not by origin:
 
-- Give every reusable UI component one module directory directly under `src/shared/components`, whether it comes from shadcn/ui, AI Elements, or project code.
+- Give every reusable UI component one module directory directly under `src/shared/ui`, whether it comes from shadcn/ui, AI Elements, or project code. Generic composition primitives such as `Sidebar`, `Separator`, `Sheet`, `Skeleton`, and `Tooltip` belong here rather than in an application or product slice.
 - Keep the implementation and colocated files in that module, for example `Button/Button.tsx` and `Button/Button.test.tsx`.
 - Use named exports and expose the module's public API from an `index.ts` at the module root.
-- Keep a composition used by one feature or entrypoint with that feature or entrypoint.
-- Move a component to shared components only when it has a genuine independent reuse case.
+- Keep a composition used by one feature, page, or runtime application with its owner. For example, `OptionsLayout` stays in `src/entrypoints/options/ui`.
+- Move a component to Shared UI only when it has a genuine independent reuse case.
 
-Apply the same module structure to shared utilities: `utils/cn/cn.ts` is exported from `utils/cn/index.ts`. Do not add a global `src/shared/utils/index.ts` barrel.
+Apply the same module structure to shared utilities: `lib/cn/cn.ts` is exported from `lib/cn/index.ts`. Do not add a global `src/shared/lib/index.ts` barrel.
 
-Do not add redundant `ui`, vendor-specific, or nested `export` directories. Do not add a global `src/shared/components/index.ts` barrel.
+Do not add redundant `ui`, vendor-specific, or nested `export` directories inside component modules. Do not add a global `src/shared/ui/index.ts` barrel.
 
 Registry components are project-owned after installation. Registry CLIs may generate flat files at the configured alias; move those files into the module structure immediately and adjust imports as needed.
 
 ## Hooks
 
-Source-install generic reusable hooks through SiberiaCanCode useverse using `reactuse.json`. Add only hooks with an immediate use case, then organize each under `src/shared/hooks/<hook-name>/` with its own `index.ts`. Remove the generated global `src/shared/hooks/index.ts` barrel and import hooks from their module path, for example `@/shared/hooks/useDisclosure`.
+Source-install generic reusable hooks through SiberiaCanCode useverse using `reactuse.json`. Add only hooks with an immediate use case, then organize each under `src/shared/lib/<hook-name>/` with its own `index.ts`. Remove the generated global `src/shared/lib/index.ts` barrel and import hooks from their module path, for example `@/shared/lib/useDisclosure`.
 
-Source-installed hooks are project-owned code. Refresh one deliberately with `pnpm dlx useverse@latest add <hook-name> --overwrite`, review the diff, and preserve project formatting and lint rules. Keep feature-specific orchestration hooks with their feature rather than moving them into shared.
+Source-installed hooks are project-owned code. Refresh one deliberately with `pnpm dlx useverse@latest add <hook-name> --overwrite`, review the diff, and preserve project formatting and lint rules. A hook installed as a direct support dependency of a shadcn registry component may come from that same registry; organize it under its own `shared/lib` module and keep it limited to the component's platform needs. Keep feature-specific orchestration hooks with their feature rather than moving them into shared.
 
 ## Updating the system
 

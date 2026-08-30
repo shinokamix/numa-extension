@@ -3,7 +3,6 @@ import eslintPluginTailwindcss from 'eslint-plugin-tailwindcss';
 import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
-import boundaries from 'eslint-plugin-boundaries';
 import importX from 'eslint-plugin-import-x';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
@@ -50,27 +49,9 @@ export default tseslint.config(
       },
     },
     plugins: {
-      boundaries,
       'import-x': importX,
     },
     settings: {
-      'boundaries/elements': [
-        {
-          type: 'entrypoint',
-          pattern: 'src/entrypoints/(*)',
-          capture: ['entrypoint'],
-        },
-        {
-          type: 'feature',
-          pattern: 'src/features/(*)',
-          capture: ['feature'],
-        },
-        {
-          type: 'shared',
-          pattern: 'src/shared/(*)',
-          capture: ['module'],
-        },
-      ],
       'import/resolver': {
         typescript: {
           project: 'tsconfig.json',
@@ -86,97 +67,15 @@ export default tseslint.config(
       },
     },
     rules: {
-      'boundaries/dependencies': [
-        'error',
-        {
-          default: 'disallow',
-          policies: [
-            {
-              from: { element: { type: 'entrypoint' } },
-              allow: {
-                to: {
-                  element: {
-                    types: { anyOf: ['feature', 'shared'] },
-                    fileInternalPath: ['index.{js,jsx,ts,tsx}', '**/index.{js,jsx,ts,tsx}'],
-                  },
-                },
-              },
-            },
-            {
-              from: { element: { type: 'entrypoint' } },
-              allow: {
-                to: {
-                  element: {
-                    type: 'shared',
-                    captured: { module: 'styles' },
-                  },
-                },
-              },
-            },
-            {
-              from: { element: { type: 'entrypoint' } },
-              allow: {
-                to: {
-                  element: {
-                    type: 'entrypoint',
-                    captured: {
-                      entrypoint: '{{ from.element.captured.entrypoint }}',
-                    },
-                  },
-                },
-              },
-            },
-            {
-              from: { element: { type: 'feature' } },
-              allow: {
-                to: {
-                  element: {
-                    type: 'shared',
-                    fileInternalPath: ['index.{js,jsx,ts,tsx}', '**/index.{js,jsx,ts,tsx}'],
-                  },
-                },
-              },
-            },
-            {
-              from: { element: { type: 'feature' } },
-              allow: {
-                to: {
-                  element: {
-                    type: 'feature',
-                    captured: {
-                      feature: '{{ from.element.captured.feature }}',
-                    },
-                  },
-                },
-              },
-            },
-            {
-              from: { element: { type: 'shared' } },
-              allow: {
-                to: { element: { type: 'shared' } },
-                dependency: { relationship: { to: 'internal' } },
-              },
-            },
-            {
-              from: { element: { type: 'shared' } },
-              allow: {
-                to: {
-                  element: {
-                    type: 'shared',
-                    fileInternalPath: ['index.{js,jsx,ts,tsx}', '**/index.{js,jsx,ts,tsx}'],
-                  },
-                },
-              },
-            },
-          ],
-        },
-      ],
       curly: ['error', 'multi-line'],
       eqeqeq: ['error', 'always'],
       'import-x/no-cycle': 'error',
       'import-x/no-default-export': 'error',
       'import-x/no-duplicates': 'error',
-      'import-x/no-unassigned-import': ['error', { allow: ['**/*.css'] }],
+      'import-x/no-unassigned-import': [
+        'error',
+        { allow: ['@/shared/styles', '**/shared/styles/globals.css'] },
+      ],
       'import-x/no-unresolved': ['error', { ignore: ['^/'] }],
       'no-console': 'warn',
       'no-warning-comments': 'warn',
@@ -237,6 +136,28 @@ export default tseslint.config(
     },
   },
   {
+    files: ['src/entrypoints/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '@/{widgets,features}{,/**}',
+                '@/{pages,entities}/*/{api,model,ui,lib}{,/**}',
+                '@/shared/{api,config,lib,ui}/*/**',
+                '../../{pages,widgets,features,entities,shared}/**',
+              ],
+              message:
+                'WXT entrypoints may import local runtime modules and public APIs from Pages, Entities, and Shared.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: ['src/features/*/ui/**/*.{js,jsx,ts,tsx}'],
     rules: {
       'no-restricted-imports': [
@@ -244,7 +165,13 @@ export default tseslint.config(
         {
           patterns: [
             {
-              group: ['**/api', '**/api/**', '@/features/*/api{,/**}', '~/features/*/api{,/**}'],
+              group: [
+                '**/api',
+                '**/api/**',
+                '**/background',
+                '@/features/*/{api,background}{,/**}',
+                '~/features/*/{api,background}{,/**}',
+              ],
               message: 'Feature UI accesses integrations through its model.',
             },
           ],
@@ -306,7 +233,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/features/*/model/**/*.{js,jsx,ts,tsx}', 'src/shared/utils/**/*.{js,jsx,ts,tsx}'],
+    files: ['src/features/*/model/**/*.{js,jsx,ts,tsx}', 'src/shared/lib/**/*.{js,jsx,ts,tsx}'],
     rules: {
       'no-restricted-globals': [
         'error',
@@ -347,6 +274,14 @@ export default tseslint.config(
       },
     },
     rules: {
+      'import-x/no-default-export': 'off',
+    },
+  },
+  {
+    files: ['steiger.config.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
       'import-x/no-default-export': 'off',
     },
   },
