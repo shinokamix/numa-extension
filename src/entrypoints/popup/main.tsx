@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { App } from './App.tsx';
+import '@/shared/styles';
 
-import '@/shared/styles/globals.css';
+import { App } from './ui/App';
 
 const root = document.querySelector('#root');
 

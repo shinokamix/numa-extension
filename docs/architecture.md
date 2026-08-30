@@ -4,16 +4,19 @@ Numa uses Feature-Sliced Design (FSD) within WXT's browser-extension structure. 
 
 ## Runtime boundaries
 
-The current UI runtime is the options page mounted by `src/entrypoints/options/main.tsx`. It owns application composition only; product behavior, persistence, messaging, and provider integrations have not been implemented yet.
+The current UI runtimes are the options page mounted by `src/entrypoints/options/main.tsx` and the popup mounted by `src/entrypoints/popup/main.tsx`. They own application composition only; product behavior, persistence, messaging, and provider integrations have not been implemented yet. The popup contains one action that opens the browser-managed options page.
 
 ## Current structure
 
 ```text
 src/
 ├── entrypoints/
-│   └── options/
-│       ├── router/ # Options-only route and section composition
-│       └── ui/     # Options-only settings layout
+│   ├── options/
+│   │   ├── router/ # Options-only route and section composition
+│   │   └── ui/     # Options-only settings layout
+│   └── popup/
+│       ├── api/    # Popup-specific browser API adapters
+│       └── ui/     # Popup root component
 └── shared/         # Business-agnostic libraries, styles, and UI
 ```
 
@@ -35,6 +38,12 @@ Shared exposes focused module APIs such as `src/shared/ui/Button/index.ts` and `
 - `src/entrypoints/options/ui/OptionsLayout.tsx` owns the settings navigation shell and router outlet.
 
 The current default route intentionally contains no product settings implementation.
+
+### Popup entrypoint
+
+- `src/entrypoints/popup/main.tsx` mounts the popup and loads global styles.
+- `src/entrypoints/popup/ui/App.tsx` renders the popup root with one settings button.
+- `src/entrypoints/popup/api/openOptionsPage.ts` adapts `browser.runtime.openOptionsPage()` for the UI.
 
 ### Shared
 
