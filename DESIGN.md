@@ -1,68 +1,47 @@
 # Numa Design System
 
-Numa uses shadcn/ui primitives and Vercel AI Elements as project-owned source code. This document defines the shared configuration and tokens that keep those components consistent.
+Numa uses semantic design tokens and project-owned source adapted from shadcn/ui and SiberiaCanCode ReactUse. This document defines stable sourcing, ownership, and placement rules; the source tree is the inventory of current components and hooks.
 
-## Source baseline
+## Stable baseline and tokens
 
-Manually copied shadcn source uses the `new-york` style, neutral semantic tokens, CSS variables, Lucide icons, TypeScript, client-side React, and Tailwind CSS 4 without a prefix or Tailwind config file.
+Manually sourced shadcn/ui primitives use the `new-york` style, neutral semantic tokens, CSS variables, Lucide icons, TypeScript, client-side React, and Tailwind CSS 4 without a prefix or Tailwind configuration file. Numa does not keep shadcn CLI configuration or use the CLI to install source.
 
-The project does not keep shadcn CLI configuration. Place source at its current owner and import `cn` from `@/shared/lib/cn`.
+Components MUST use semantic color roles such as `background`, `foreground`, `card`, `popover`, `primary`, `secondary`, `muted`, `accent`, `destructive`, `border`, `input`, and `ring`, including their foreground counterparts where defined. They MUST NOT depend directly on palette colors.
 
-## Tokens
+The base radius is `--radius: 0.5rem`. Use radius utilities derived from it; use `rounded-full` only for circles and intentional pills. Use Tailwind's standard typography, spacing, shadow, and motion scales. Add a project token only when a repeated value cannot be expressed by an existing semantic token or utility, and avoid arbitrary values when a standard choice exists.
 
-### Colors
+## Ownership and placement
 
-Components MUST use shadcn semantic color roles instead of Tailwind palette colors:
+Place UI and hooks according to their current FSD owner, not their upstream registry path:
 
-- `background` and `foreground`
-- `card` and `card-foreground`
-- `popover` and `popover-foreground`
-- `primary` and `primary-foreground`
-- `secondary` and `secondary-foreground`
-- `muted` and `muted-foreground`
-- `accent` and `accent-foreground`
-- `destructive`
-- `border`, `input`, and `ring`
+- Keep single-owner source with its Page, Widget, Feature, Entity, or entrypoint.
+- Promote domain-independent source to Shared only after an unrelated reuse case exists.
+- Give Shared UI components and libraries focused module directories and public `index.ts` APIs; do not add global layer barrels.
+- Keep private support code out of slice public APIs.
 
-Light and dark themes define these roles as CSS variables in `src/shared/styles/globals.css`. Components MUST NOT depend directly on palette names such as `neutral-900` or `blue-500`.
+Product-specific components, layouts, and compositions are explicitly permitted as local project code. They do not need shadcn/ui provenance. Keep product composition outside copied primitive files.
 
-### Radius
+## shadcn/ui primitives
 
-The design system owns one base radius token:
+Prefer shadcn/ui when it provides an appropriate primitive. Copy only the source and support graph needed by current behavior, manually place it with its owner, and treat it as project-owned code. Do not initialize shadcn/ui, run its generator, or preserve unused APIs and dependencies.
 
-```css
---radius: 0.5rem;
+Adapt copied source to Numa's semantic tokens, accessibility requirements, architecture boundaries, formatting, and lint rules. Do not suppress project rules merely to preserve upstream formatting. Refresh source by comparing deliberately with its recorded upstream source.
+
+## ReactUse hooks
+
+For a generic hook need, prefer manually sourcing an appropriate hook from SiberiaCanCode ReactUse when it fits the immediate use case. Start it with its sole owner and promote it to Shared only after independent reuse. Feature-specific orchestration hooks remain with their feature rather than being treated as generic ReactUse utilities.
+
+Copied hooks are project-owned. Copy only required behavior, avoid new dependencies unless explicitly approved, adapt the source to project formatting and lint rules, and refresh it by comparison with the recorded upstream source. Do not run a registry installer or generator.
+
+## Source provenance
+
+Every copied TypeScript or TSX source file MUST begin with an identifiable upstream URL and concrete project adaptations in this format:
+
+```ts
+// Source code: https://...
+// Adaptations:
+// 1. First concrete project change.
+// 2. Second concrete project change.
 ```
 
-Use the standard shadcn and Tailwind radius utilities derived from this value. Do not introduce component-specific or arbitrary radius values. Use `rounded-full` only for circles and intentional pills.
-
-### Other scales
-
-Use Tailwind's standard typography, spacing, shadow, and motion scales. Add a project-specific token only after a concrete value is repeated and cannot be expressed by an existing semantic token or utility.
-
-Avoid arbitrary values when a standard token or utility exists.
-
-## Components
-
-Organize components by current ownership and reuse, not by origin:
-
-- Keep a component and its support graph with the Page, Feature, or runtime that solely owns it. The settings Sidebar and its sheet, tooltip, state, and responsive support are private to `pages/settings`.
-- Promote a component to `src/shared/ui` only after it has a genuine independent consumer. Keep only the upstream support code required by current behavior rather than a speculative registry inventory.
-- Give each Shared UI component one module directory, keep colocated files there, and expose named exports from an `index.ts` at the module root.
-- Keep focused slice public APIs while leaving private UI modules unexported from the slice root.
-
-Apply the same module structure to shared utilities: `lib/cn/cn.ts` is exported from `lib/cn/index.ts`. Do not add a global `src/shared/lib/index.ts` barrel.
-
-Do not add redundant `ui`, vendor-specific, or nested `export` directories inside component modules. Do not add a global `src/shared/ui/index.ts` barrel.
-
-Registry components are project-owned after installation. Copy shadcn source manually at the owning location; do not run the shadcn CLI in this project. Add the source URL and a concise list of adaptations to every copied file, including that it was adjusted to project formatting and lint rules. Do not suppress lint rules to preserve upstream formatting. Prune APIs and dependencies not required by current behavior, and keep product composition outside registry files. When refreshing source, compare deliberately with the recorded upstream source and preserve project formatting, accessibility, tokens, and architecture boundaries.
-
-## Hooks
-
-Copy generic hook source manually from SiberiaCanCode ReactUse only when there is an immediate use case. Start a single-owner hook in its owner's `lib` segment and move it to `src/shared/lib/<hook-name>/` with a focused `index.ts` only after an unrelated consumer appears.
-
-Source-installed hooks are project-owned code. Every copied hook must record its source URL and project adaptations beside the source reference, including adjustment to project formatting and lint rules. Refresh hooks by comparing against the recorded upstream source rather than by running a registry CLI. Preserve project formatting and lint rules, and keep feature-specific orchestration hooks with their feature.
-
-## Updating the system
-
-When a change modifies shadcn configuration, shared tokens, or component-placement rules, update this document and the corresponding source files together.
+Each numbered item records a concrete placement, API, dependency, behavior, styling, accessibility, formatting, or lint adaptation. Source attribution does not replace preservation of applicable upstream licensing. When source is refreshed, update the URL or adaptation list when necessary.

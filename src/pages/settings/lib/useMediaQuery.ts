@@ -1,5 +1,7 @@
 // Source code: https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useMediaQuery/useMediaQuery.ts
-// Adaptations: installed in the owning Page lib without a generated barrel and adjusted to project formatting and lint rules.
+// Adaptations:
+// 1. Installed the hook in its owning Page lib without a generated barrel.
+// 2. Adjusted the source to project formatting and lint rules.
 import { useCallback, useSyncExternalStore } from 'react';
 
 const getServerSnapshot = () => false;

@@ -1,5 +1,6 @@
 // Source code: https://ui.shadcn.com/r/styles/new-york-v4/button.json
-// Adaptations: adjusted to project formatting and lint rules.
+// Adaptations:
+// 1. Adjusted the source to project formatting and lint rules.
 import type * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Slot } from 'radix-ui';

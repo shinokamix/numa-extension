@@ -1,5 +1,9 @@
 // Source code: https://ui.shadcn.com/r/styles/new-york-v4/sheet.json
-// Adaptations: installed page-locally, pruned to the left-side Settings sheet, removed the unused RSC directive, and adjusted to project formatting and lint rules.
+// Adaptations:
+// 1. Installed the primitive with its owning Page.
+// 2. Pruned the API to the left-side Settings sheet.
+// 3. Removed the unused React Server Components directive.
+// 4. Adjusted the source to project formatting and lint rules.
 
 import type * as React from 'react';
 import { Dialog as SheetPrimitive } from 'radix-ui';

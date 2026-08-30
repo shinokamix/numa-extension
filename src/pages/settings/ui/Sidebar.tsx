@@ -1,11 +1,11 @@
 // Source code: https://ui.shadcn.com/r/styles/new-york-v4/sidebar.json
 // Adaptations:
-// - Cookie persistence removed; state remains local.
-// - Fixed to Numa's left inset layout with desktop icon collapse and a mobile sheet.
-// - Removed unused input, skeleton, rail, action, badge, and nested-menu APIs.
-// - Replaced shadcn useIsMobile with the page-local ReactUse useMediaQuery source.
-// - Removed the unused React Server Components directive.
-// - Adjusted to project formatting and lint rules.
+// 1. Removed cookie persistence so state remains local.
+// 2. Fixed the primitive to Numa's left inset layout with desktop icon collapse and a mobile sheet.
+// 3. Removed unused input, skeleton, rail, action, badge, and nested-menu APIs.
+// 4. Replaced shadcn useIsMobile with the page-local ReactUse useMediaQuery source.
+// 5. Removed the unused React Server Components directive.
+// 6. Adjusted the source to project formatting and lint rules.
 
 import * as React from 'react';
 import { PanelLeftIcon } from 'lucide-react';

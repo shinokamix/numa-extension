@@ -148,14 +148,36 @@ export default tseslint.config(
         {
           patterns: [
             {
-              group: [
-                '@/{widgets,features}{,/**}',
-                '@/{pages,entities}/*/{api,model,ui,lib}{,/**}',
-                '@/shared/{api,config,lib,ui}/*/**',
-                '../../{pages,widgets,features,entities,shared}/**',
-              ],
+              regex:
+                '^(?:(?:@/|~/src/)(?:(?:pages|widgets|features|entities)/[^/]+/.+|shared/[^/]+/[^/]+/.+)|(?:\\.\\./)+(?:(?:pages|widgets|features|entities)/[^/]+/.+|shared/[^/]+/[^/]+/.+))$',
               message:
-                'WXT entrypoints may import local runtime modules and public APIs from Pages, Entities, and Shared.',
+                'WXT entrypoints may import only public APIs from lower Feature-Sliced Design layers.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: [
+      'src/{pages,widgets,features,entities}/**/*.{js,jsx,ts,tsx}',
+      'src/shared/**/*.{js,jsx,ts,tsx}',
+    ],
+    rules: {
+      'import-x/no-restricted-paths': [
+        'error',
+        {
+          zones: [
+            {
+              target: [
+                './src/pages',
+                './src/widgets',
+                './src/features',
+                './src/entities',
+                './src/shared',
+              ],
+              from: './src/entrypoints',
+              message: 'Feature-Sliced Design layers must not import WXT entrypoints.',
             },
           ],
         },
