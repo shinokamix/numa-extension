@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from 'lucide-react';
 
-import { SidebarTrigger } from './Sidebar';
+import { SidebarTrigger } from './sidebar';
 
 export function SettingsHeader() {
   return (

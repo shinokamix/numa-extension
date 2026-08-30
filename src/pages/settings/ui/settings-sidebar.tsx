@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from './Sidebar';
+} from './sidebar';
 
 const navigationIcons = {
   settings: SettingsIcon,

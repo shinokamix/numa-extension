@@ -1,6 +1,6 @@
-import { Button } from '@/shared/ui/Button';
+import { Button } from '@/shared/ui/button';
 
-import { openOptionsPage } from '../api/openOptionsPage';
+import { openOptionsPage } from '../api/open-options-page';
 
 export function App() {
   const handleOpenSettings = () => {

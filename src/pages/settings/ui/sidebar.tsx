@@ -13,9 +13,9 @@ import { Slot } from 'radix-ui';
 
 import { cn } from '@/shared/lib/cn';
 import { useMediaQuery } from '@/shared/lib/use-media-query';
-import { Button } from '@/shared/ui/Button';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './Sheet';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './Tooltip';
+import { Button } from '@/shared/ui/button';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './sheet';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
 
 const MOBILE_QUERY = '(max-width: 767px)';
 const SIDEBAR_WIDTH = '16rem';

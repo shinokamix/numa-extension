@@ -1,1 +1,1 @@
-export { SettingsLayout } from './ui/SettingsLayout';
+export { SettingsLayout } from './ui/settings-layout';

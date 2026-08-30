@@ -1,8 +1,8 @@
 import { Outlet } from '@tanstack/react-router';
 
-import { SettingsHeader } from './SettingsHeader';
-import { SettingsSidebar } from './SettingsSidebar';
-import { SidebarInset, SidebarProvider } from './Sidebar';
+import { SettingsHeader } from './settings-header';
+import { SettingsSidebar } from './settings-sidebar';
+import { SidebarInset, SidebarProvider } from './sidebar';
 
 export function SettingsLayout() {
   return (

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { ThemeProvider, initializeTheme } from '@/entities/preferences';
 import '@/shared/styles';
 
-import { App } from './ui/App';
+import { App } from './ui/app';
 
 const root = document.querySelector('#root');
 
