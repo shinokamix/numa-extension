@@ -35,4 +35,4 @@ pnpm build
 pnpm build:firefox
 ```
 
-WXT composition roots live in `src/entrypoints`. The current options routing and layout stay under `src/entrypoints/options`, while business-agnostic foundations live in `src/shared`. See [`docs/architecture.md`](docs/architecture.md) for ownership, dependency, public-API, and browser-runtime rules. See [`DESIGN.md`](DESIGN.md) before changing UI components or tokens.
+WXT composition roots live in `src/entrypoints`. The options entrypoint owns router bootstrap and file-route composition, while route-level UI lives in focused `src/pages` slices. Single-owner support stays local and moves to `src/shared` only after genuine independent reuse. See [`docs/architecture.md`](docs/architecture.md) for ownership, dependency, public-API, and browser-runtime rules. See [`DESIGN.md`](DESIGN.md) before changing UI components or tokens.

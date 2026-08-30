@@ -2,22 +2,11 @@
 
 Numa uses shadcn/ui primitives and Vercel AI Elements as project-owned source code. This document defines the shared configuration and tokens that keep those components consistent.
 
-## shadcn Configuration
+## Source baseline
 
-Use these settings in `components.json`:
+Manually copied shadcn source uses the `new-york` style, neutral semantic tokens, CSS variables, Lucide icons, TypeScript, client-side React, and Tailwind CSS 4 without a prefix or Tailwind config file.
 
-| Setting                 | Value                                 |
-| ----------------------- | ------------------------------------- |
-| Style                   | `new-york`                            |
-| Base color              | `neutral`                             |
-| CSS variables           | enabled                               |
-| Icon library            | `lucide`                              |
-| TypeScript/TSX          | enabled                               |
-| React Server Components | disabled                              |
-| Tailwind prefix         | none                                  |
-| Tailwind config         | none; the project uses Tailwind CSS 4 |
-
-Both shadcn component aliases resolve to `@/shared/ui`. The shadcn utility alias resolves directly to `@/shared/lib/cn`. The project does not use a generic `lib` alias.
+The project does not keep shadcn CLI configuration. Place source at its current owner and import `cn` from `@/shared/lib/cn`.
 
 ## Tokens
 
@@ -55,25 +44,24 @@ Avoid arbitrary values when a standard token or utility exists.
 
 ## Components
 
-Organize components by reuse, not by origin:
+Organize components by current ownership and reuse, not by origin:
 
-- Give every reusable UI component one module directory directly under `src/shared/ui`, whether it comes from shadcn/ui, AI Elements, or project code. Generic composition primitives such as `Sidebar`, `Separator`, `Sheet`, `Skeleton`, and `Tooltip` belong here rather than in an application or product slice.
-- Keep the implementation and colocated files in that module, for example `Button/Button.tsx` and `Button/Button.test.tsx`.
-- Use named exports and expose the module's public API from an `index.ts` at the module root.
-- Keep a composition used by one feature, page, or runtime application with its owner. For example, `OptionsLayout` stays in `src/entrypoints/options/ui`.
-- Move a component to Shared UI only when it has a genuine independent reuse case.
+- Keep a component and its support graph with the Page, Feature, or runtime that solely owns it. The settings Sidebar and its sheet, tooltip, state, and responsive support are private to `pages/settings`.
+- Promote a component to `src/shared/ui` only after it has a genuine independent consumer. Keep only the upstream support code required by current behavior rather than a speculative registry inventory.
+- Give each Shared UI component one module directory, keep colocated files there, and expose named exports from an `index.ts` at the module root.
+- Keep focused slice public APIs while leaving private UI modules unexported from the slice root.
 
 Apply the same module structure to shared utilities: `lib/cn/cn.ts` is exported from `lib/cn/index.ts`. Do not add a global `src/shared/lib/index.ts` barrel.
 
 Do not add redundant `ui`, vendor-specific, or nested `export` directories inside component modules. Do not add a global `src/shared/ui/index.ts` barrel.
 
-Registry components are project-owned after installation. Registry CLIs may generate flat files at the configured alias; move those files into the module structure immediately and adjust imports as needed.
+Registry components are project-owned after installation. Copy shadcn source manually at the owning location; do not run the shadcn CLI in this project. Add the source URL and a concise list of adaptations to every copied file, including that it was adjusted to project formatting and lint rules. Do not suppress lint rules to preserve upstream formatting. Prune APIs and dependencies not required by current behavior, and keep product composition outside registry files. When refreshing source, compare deliberately with the recorded upstream source and preserve project formatting, accessibility, tokens, and architecture boundaries.
 
 ## Hooks
 
-Source-install generic reusable hooks through SiberiaCanCode useverse using `reactuse.json`. Add only hooks with an immediate use case, then organize each under `src/shared/lib/<hook-name>/` with its own `index.ts`. Remove the generated global `src/shared/lib/index.ts` barrel and import hooks from their module path, for example `@/shared/lib/useDisclosure`.
+Copy generic hook source manually from SiberiaCanCode ReactUse only when there is an immediate use case. Start a single-owner hook in its owner's `lib` segment and move it to `src/shared/lib/<hook-name>/` with a focused `index.ts` only after an unrelated consumer appears.
 
-Source-installed hooks are project-owned code. Refresh one deliberately with `pnpm dlx useverse@latest add <hook-name> --overwrite`, review the diff, and preserve project formatting and lint rules. A hook installed as a direct support dependency of a shadcn registry component may come from that same registry; organize it under its own `shared/lib` module and keep it limited to the component's platform needs. Keep feature-specific orchestration hooks with their feature rather than moving them into shared.
+Source-installed hooks are project-owned code. Every copied hook must record its source URL and project adaptations beside the source reference, including adjustment to project formatting and lint rules. Refresh hooks by comparing against the recorded upstream source rather than by running a registry CLI. Preserve project formatting and lint rules, and keep feature-specific orchestration hooks with their feature.
 
 ## Updating the system
 

@@ -1,1 +1,1 @@
-export { createOptionsRouter, optionsRouter } from './optionsRouter';
+export { createRouter, router } from './router';

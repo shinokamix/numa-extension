@@ -15,7 +15,12 @@ const testFiles = ['**/*.{test,spec}.{js,jsx,ts,tsx}'];
 
 export default tseslint.config(
   {
-    ignores: ['.output/**', '.wxt/**', 'coverage/**'],
+    ignores: [
+      '.output/**',
+      '.wxt/**',
+      'coverage/**',
+      'src/entrypoints/options/router/routeTree.gen.ts',
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,

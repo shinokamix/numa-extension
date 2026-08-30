@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 import '@/shared/styles';
 
-import { optionsRouter } from './router';
+import { router } from './router';
 
 const root = document.querySelector('#root');
 
@@ -14,6 +14,6 @@ if (!root) {
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <RouterProvider router={optionsRouter} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );
