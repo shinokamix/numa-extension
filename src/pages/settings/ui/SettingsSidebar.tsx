@@ -2,7 +2,6 @@ import { Link } from '@tanstack/react-router';
 import { CodeIcon, SettingsIcon, SparklesIcon } from 'lucide-react';
 
 import { settingsNavigation } from '../model/navigation';
-import { Separator } from './Separator';
 import {
   Sidebar,
   SidebarContent,
@@ -35,7 +34,6 @@ export function SettingsSidebar() {
           </div>
         </div>
       </SidebarHeader>
-      <Separator className="bg-sidebar-border" />
       <SidebarContent>
         <SidebarGroup>
           <nav aria-label="Settings pages">
@@ -66,7 +64,6 @@ export function SettingsSidebar() {
           </nav>
         </SidebarGroup>
       </SidebarContent>
-      <Separator className="bg-sidebar-border" />
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
