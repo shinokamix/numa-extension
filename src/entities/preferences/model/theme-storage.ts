@@ -1,6 +1,7 @@
 import { storage } from 'wxt/utils/storage';
 
-import { DEFAULT_THEME, normalizeThemePreference, type ThemePreference } from './theme-preference';
+import type { ThemePreference } from './theme-preference';
+import { DEFAULT_THEME, normalizeThemePreference } from './theme-preference';
 
 const themeItem = storage.defineItem<unknown>('local:preferences:theme', {
   fallback: DEFAULT_THEME,

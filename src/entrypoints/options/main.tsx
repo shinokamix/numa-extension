@@ -1,9 +1,10 @@
+import '@/shared/styles';
+
 import { RouterProvider } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { ThemeProvider, initializeTheme } from '@/entities/preferences';
-import '@/shared/styles';
+import { initializeTheme, ThemeProvider } from '@/entities/preferences';
 
 import { router } from './router';
 

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["src/**/*.{test,spec}.{ts,tsx}", "steiger.config.ts"],
+  "wxt": {
+    "entry": ["src/entrypoints/**/*"]
+  },
+  "ignoreDependencies": ["@ai-sdk/openai", "@ai-sdk/react", "ai"]
+}

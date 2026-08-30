@@ -1,8 +1,5 @@
-import {
-  createHashHistory,
-  createRouter as createTanStackRouter,
-  type RouterHistory,
-} from '@tanstack/react-router';
+import type { RouterHistory } from '@tanstack/react-router';
+import { createHashHistory, createRouter as createTanStackRouter } from '@tanstack/react-router';
 
 import { routeTree } from './routeTree.gen';
 

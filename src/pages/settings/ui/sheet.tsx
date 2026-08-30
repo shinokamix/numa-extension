@@ -5,8 +5,8 @@
 // 3. Removed the unused React Server Components directive.
 // 4. Adjusted the source to project formatting and lint rules.
 
-import type * as React from 'react';
 import { Dialog as SheetPrimitive } from 'radix-ui';
+import type * as React from 'react';
 
 import { cn } from '@/shared/lib/cn';
 

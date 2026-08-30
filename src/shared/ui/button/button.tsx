@@ -1,9 +1,10 @@
 // Source code: https://ui.shadcn.com/r/styles/new-york-v4/button.json
 // Adaptations:
 // 1. Adjusted the source to project formatting and lint rules.
-import type * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
+import type * as React from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
@@ -62,4 +63,4 @@ function Button({
   );
 }
 
-export { Button, buttonVariants };
+export { Button };

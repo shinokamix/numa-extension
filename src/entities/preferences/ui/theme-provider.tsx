@@ -1,11 +1,14 @@
-import { type PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useMediaQuery } from '@/shared/lib/use-media-query';
 
-import { normalizeThemePreference, type ThemePreference } from '../model/theme-preference';
+import type { ThemePreference } from '../model/theme-preference';
+import { normalizeThemePreference } from '../model/theme-preference';
 import { applyTheme, SYSTEM_DARK_MEDIA_QUERY } from '../model/theme-runtime';
 import { saveTheme, watchTheme } from '../model/theme-storage';
-import { ThemeContext, type SetTheme } from './theme-context';
+import type { SetTheme } from './theme-context';
+import { ThemeContext } from './theme-context';
 
 interface ThemeProviderProps extends PropsWithChildren {
   initialTheme: ThemePreference;
@@ -23,20 +26,20 @@ const persistTheme: PersistTheme = async (value) => {
   }
 };
 
-const setTheme: SetTheme = (value) => {
+const updateTheme: SetTheme = (value) => {
   void persistTheme(value);
 };
 
 export function ThemeProvider({ children, initialTheme }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState(initialTheme);
+  const [theme, setTheme] = useState(initialTheme);
   const systemPrefersDark = useMediaQuery(SYSTEM_DARK_MEDIA_QUERY);
 
-  useEffect(() => watchTheme(setThemeState), []);
+  useEffect(() => watchTheme(setTheme), []);
   useEffect(() => {
     applyTheme({ root: document.documentElement, theme, systemPrefersDark });
   }, [systemPrefersDark, theme]);
 
-  const value = useMemo(() => ({ theme, setTheme }), [theme]);
+  const value = useMemo(() => ({ theme, setTheme: updateTheme }), [theme]);
 
   return <ThemeContext value={value}>{children}</ThemeContext>;
 }

@@ -51,7 +51,9 @@ export function SettingsSidebar() {
                           'aria-current': 'page',
                           'data-active': true,
                         }}
-                        onClick={() => setOpenMobile(false)}
+                        onClick={() => {
+                          setOpenMobile(false);
+                        }}
                       >
                         <Icon aria-hidden="true" />
                         <span>{item.title}</span>

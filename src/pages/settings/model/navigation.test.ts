@@ -4,7 +4,7 @@ import { settingsNavigation } from './navigation';
 
 describe('settingsNavigation', () => {
   it('defines General as the only top-level settings destination', () => {
-    expect(settingsNavigation).toEqual([
+    expect(settingsNavigation).toStrictEqual([
       {
         id: 'general',
         title: 'General',

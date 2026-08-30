@@ -5,6 +5,12 @@ pre-commit:
       run: pnpm format:check
     - name: lint
       run: pnpm lint
+    - name: architecture
+      run: pnpm lint:arch
+    - name: css
+      run: pnpm lint:css
+    - name: dead-code
+      run: pnpm lint:dead-code
     - name: typecheck
       run: pnpm typecheck
     - name: test

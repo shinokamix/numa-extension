@@ -6,8 +6,8 @@
 // 4. Adjusted semantic styling, formatting, and lint compliance for Numa.
 
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
-import type * as React from 'react';
 import { Select as SelectPrimitive } from 'radix-ui';
+import type * as React from 'react';
 
 import { cn } from '@/shared/lib/cn';
 

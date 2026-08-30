@@ -1,4 +1,5 @@
-import { type ThemePreference, useTheme } from '@/entities/preferences';
+import type { ThemePreference } from '@/entities/preferences';
+import { useTheme } from '@/entities/preferences';
 
 import {
   Select,

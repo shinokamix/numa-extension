@@ -13,7 +13,9 @@ export function useMediaQuery(query: string): boolean {
       const mediaQuery = globalThis.matchMedia(query);
       mediaQuery.addEventListener('change', callback);
 
-      return () => mediaQuery.removeEventListener('change', callback);
+      return () => {
+        mediaQuery.removeEventListener('change', callback);
+      };
     },
     [query],
   );

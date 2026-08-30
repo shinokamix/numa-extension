@@ -1,17 +1,38 @@
 import eslint from '@eslint/js';
-import eslintPluginTailwindcss from 'eslint-plugin-tailwindcss';
 import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
 import importX from 'eslint-plugin-import-x';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import promise from 'eslint-plugin-promise';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
+import regexp from 'eslint-plugin-regexp';
+import security from 'eslint-plugin-security';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import sonarjs from 'eslint-plugin-sonarjs';
+import eslintPluginTailwindcss from 'eslint-plugin-tailwindcss';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 const sourceFiles = ['**/*.{js,jsx,ts,tsx}'];
 const testFiles = ['**/*.{test,spec}.{js,jsx,ts,tsx}'];
+
+const asErrors = (rules) =>
+  Object.fromEntries(
+    Object.entries(rules).map(([name, configuration]) => {
+      const severity = Array.isArray(configuration) ? configuration[0] : configuration;
+
+      return [
+        name,
+        severity === 'off' || severity === 0
+          ? configuration
+          : Array.isArray(configuration)
+            ? ['error', ...configuration.slice(1)]
+            : 'error',
+      ];
+    }),
+  );
 
 export default tseslint.config(
   {
@@ -22,8 +43,16 @@ export default tseslint.config(
       'src/entrypoints/options/router/routeTree.gen.ts',
     ],
   },
+  {
+    linterOptions: {
+      noInlineConfig: true,
+      reportUnusedDisableDirectives: 'error',
+      reportUnusedInlineConfigs: 'error',
+    },
+  },
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
   {
     ...eslintPluginTailwindcss.configs.recommended,
     settings: {
@@ -32,14 +61,9 @@ export default tseslint.config(
       },
     },
     rules: {
-      ...eslintPluginTailwindcss.configs.recommended.rules,
+      ...asErrors(eslintPluginTailwindcss.configs.recommended.rules),
       'tailwindcss/classnames-order': 'off',
-      'tailwindcss/no-custom-classname': [
-        'warn',
-        {
-          whitelist: ['logo', 'react', 'card', 'read-the-docs'],
-        },
-      ],
+      'tailwindcss/no-custom-classname': 'error',
     },
   },
   {
@@ -55,6 +79,11 @@ export default tseslint.config(
     },
     plugins: {
       'import-x': importX,
+      promise,
+      regexp,
+      security,
+      'simple-import-sort': simpleImportSort,
+      sonarjs,
     },
     settings: {
       'import/resolver': {
@@ -72,33 +101,87 @@ export default tseslint.config(
       },
     },
     rules: {
+      ...asErrors(importX.flatConfigs.recommended.rules),
+      ...asErrors(importX.flatConfigs.typescript.rules),
+      ...asErrors(regexp.configs['flat/recommended'].rules),
+      complexity: ['error', { max: 12 }],
       curly: ['error', 'multi-line'],
       eqeqeq: ['error', 'always'],
+      'max-depth': ['error', 4],
+      'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
+      'max-lines-per-function': [
+        'error',
+        { max: 100, skipBlankLines: true, skipComments: true, IIFEs: true },
+      ],
+      'max-nested-callbacks': ['error', 4],
+      'max-params': ['error', 4],
+      'max-statements': ['error', 40],
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'no-new-func': 'error',
+      'no-script-url': 'error',
+      'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+      'import-x/first': 'error',
+      'import-x/newline-after-import': 'error',
+      'import-x/no-absolute-path': 'error',
+      'import-x/no-anonymous-default-export': 'error',
       'import-x/no-cycle': 'error',
+      'import-x/no-deprecated': 'error',
+      'import-x/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: [
+            '**/*.{test,spec}.{js,jsx,ts,tsx}',
+            '**/*.config.{js,ts}',
+            'eslint.config.js',
+            'src/entities/preferences/model/theme-storage.ts',
+          ],
+        },
+      ],
       'import-x/no-default-export': 'error',
       'import-x/no-duplicates': 'error',
       'import-x/no-unassigned-import': [
         'error',
         { allow: ['@/shared/styles', '**/shared/styles/globals.css'] },
       ],
+      'import-x/no-mutable-exports': 'error',
+      'import-x/no-named-default': 'error',
+      'import-x/no-relative-packages': 'error',
+      'import-x/no-self-import': 'error',
       'import-x/no-unresolved': ['error', { ignore: ['^/'] }],
-      'no-console': 'warn',
-      'no-warning-comments': 'warn',
+      'import-x/no-useless-path-segments': 'error',
+      'promise/no-multiple-resolved': 'error',
+      'promise/no-return-in-finally': 'error',
+      'promise/param-names': 'error',
+      'security/detect-bidi-characters': 'error',
+      'security/detect-eval-with-expression': 'error',
+      'security/detect-new-buffer': 'error',
+      'security/detect-non-literal-require': 'error',
+      'simple-import-sort/exports': 'error',
+      'simple-import-sort/imports': 'error',
+      'sonarjs/cognitive-complexity': ['error', 15],
+      'sonarjs/no-collapsible-if': 'error',
+      'sonarjs/no-duplicated-branches': 'error',
+      'sonarjs/no-identical-conditions': 'error',
+      'sonarjs/no-identical-expressions': 'error',
+      'no-console': 'error',
+      'no-warning-comments': 'error',
       'prefer-const': ['error', { destructuring: 'all' }],
       '@typescript-eslint/ban-ts-comment': [
         'error',
         {
-          'ts-expect-error': 'allow-with-description',
+          'ts-check': false,
+          'ts-expect-error': true,
           'ts-ignore': true,
           'ts-nocheck': true,
-          'ts-check': false,
-          minimumDescriptionLength: 10,
         },
       ],
-      '@typescript-eslint/consistent-indexed-object-style': ['warn', 'record'],
-      '@typescript-eslint/consistent-type-imports': 'warn',
+      '@typescript-eslint/consistent-indexed-object-style': ['error', 'record'],
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/no-magic-numbers': [
-        'warn',
+        'error',
         {
           ignore: [-1, 0, 1],
           ignoreArrayIndexes: true,
@@ -109,13 +192,41 @@ export default tseslint.config(
           ignoreTypeIndexes: true,
         },
       ],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'error',
+      '@typescript-eslint/prefer-readonly': 'error',
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/switch-exhaustiveness-check': 'error',
     },
   },
   {
     ...react.configs.flat.recommended,
     files: ['**/*.{jsx,tsx}'],
+    rules: {
+      ...react.configs.flat.recommended.rules,
+      'react/button-has-type': 'error',
+      'react/destructuring-assignment': 'error',
+      'react/hook-use-state': 'error',
+      'react/jsx-boolean-value': ['error', 'never'],
+      'react/jsx-no-constructed-context-values': 'error',
+      'react/jsx-no-leaked-render': 'error',
+      'react/jsx-no-useless-fragment': 'error',
+      'react/no-array-index-key': 'error',
+      'react/no-multi-comp': 'error',
+      'react/no-object-type-as-default-prop': 'error',
+      'react/no-unstable-nested-components': 'error',
+      'react/prefer-stateless-function': 'error',
+      'react/self-closing-comp': 'error',
+    },
+  },
+  {
+    files: [
+      'src/pages/general-settings/ui/select.tsx',
+      'src/pages/settings/ui/{sheet,sidebar,tooltip}.tsx',
+    ],
+    rules: {
+      'react/no-multi-comp': 'off',
+    },
   },
   {
     ...react.configs.flat['jsx-runtime'],
@@ -124,10 +235,18 @@ export default tseslint.config(
   {
     ...reactHooks.configs.flat.recommended,
     files: ['**/*.{jsx,tsx}'],
+    rules: asErrors(reactHooks.configs.flat.recommended.rules),
   },
   {
-    ...jsxA11y.flatConfigs.recommended,
+    ...jsxA11y.flatConfigs.strict,
     files: ['**/*.{jsx,tsx}'],
+    settings: {
+      'jsx-a11y': {
+        components: {
+          Button: 'button',
+        },
+      },
+    },
   },
   {
     ...vitest.configs.recommended,
@@ -136,8 +255,25 @@ export default tseslint.config(
       ...vitest.configs.recommended.rules,
       '@typescript-eslint/no-magic-numbers': 'off',
       'import-x/no-default-export': 'off',
-      'vitest/no-disabled-tests': 'warn',
+      'max-lines-per-function': 'off',
+      'max-statements': 'off',
+      'vitest/consistent-test-filename': 'error',
+      'vitest/consistent-test-it': ['error', { fn: 'it' }],
+      'vitest/consistent-vitest-vi': 'error',
+      'vitest/expect-expect': 'error',
+      'vitest/max-nested-describe': ['error', { max: 3 }],
+      'vitest/no-conditional-expect': 'error',
+      'vitest/no-conditional-tests': 'error',
+      'vitest/no-disabled-tests': 'error',
       'vitest/no-focused-tests': 'error',
+      'vitest/no-standalone-expect': 'error',
+      'vitest/prefer-hooks-in-order': 'error',
+      'vitest/prefer-hooks-on-top': 'error',
+      'vitest/prefer-lowercase-title': 'error',
+      'vitest/prefer-strict-equal': 'error',
+      'vitest/prefer-to-be': 'error',
+      'vitest/prefer-to-have-length': 'error',
+      'vitest/require-top-level-describe': 'error',
     },
   },
   {
@@ -280,9 +416,28 @@ export default tseslint.config(
     },
   },
   {
-    files: ['wxt.config.ts', 'src/entrypoints/*/index.{ts,tsx}'],
+    files: ['vitest.config.ts', 'wxt.config.ts', 'src/entrypoints/*/index.{ts,tsx}'],
     rules: {
       'import-x/no-default-export': 'off',
+    },
+  },
+  {
+    files: ['eslint.config.js'],
+    rules: {
+      '@typescript-eslint/no-magic-numbers': 'off',
+      'max-lines': ['error', { max: 500, skipBlankLines: true, skipComments: true }],
+    },
+  },
+  {
+    files: ['src/pages/settings/ui/sidebar.tsx'],
+    rules: {
+      'max-lines': ['error', { max: 350, skipBlankLines: true, skipComments: true }],
+    },
+  },
+  {
+    files: ['src/shared/lib/cn/cn.ts'],
+    rules: {
+      'tailwindcss/no-custom-classname': 'off',
     },
   },
   {

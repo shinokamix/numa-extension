@@ -3,7 +3,7 @@ import { loadTheme } from './theme-storage';
 
 export const SYSTEM_DARK_MEDIA_QUERY = '(prefers-color-scheme: dark)';
 
-export type ResolvedTheme = Exclude<ThemePreference, 'system'>;
+type ResolvedTheme = Exclude<ThemePreference, 'system'>;
 
 interface ThemeRoot {
   classList: Pick<DOMTokenList, 'toggle'>;
@@ -24,7 +24,7 @@ interface InitializeThemeOptions {
   systemPrefersDark?: boolean;
 }
 
-export function resolveTheme({ theme, systemPrefersDark }: ResolveThemeOptions): ResolvedTheme {
+function resolveTheme({ theme, systemPrefersDark }: ResolveThemeOptions): ResolvedTheme {
   return theme === 'system' ? (systemPrefersDark ? 'dark' : 'light') : theme;
 }
 

@@ -1,6 +1,4 @@
-export const THEME_PREFERENCES = ['system', 'light', 'dark'] as const;
-
-export type ThemePreference = (typeof THEME_PREFERENCES)[number];
+export type ThemePreference = 'system' | 'light' | 'dark';
 
 export const DEFAULT_THEME: ThemePreference = 'system';
 

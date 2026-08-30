@@ -4,8 +4,8 @@
 // 2. Removed the unused React Server Components directive.
 // 3. Adjusted the source to project formatting and lint rules.
 
-import type * as React from 'react';
 import { Tooltip as TooltipPrimitive } from 'radix-ui';
+import type * as React from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
@@ -54,4 +54,4 @@ function TooltipContent({
   );
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };

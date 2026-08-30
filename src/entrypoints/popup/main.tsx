@@ -1,8 +1,9 @@
+import '@/shared/styles';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { ThemeProvider, initializeTheme } from '@/entities/preferences';
-import '@/shared/styles';
+import { initializeTheme, ThemeProvider } from '@/entities/preferences';
 
 import { App } from './ui/app';
 
