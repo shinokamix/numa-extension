@@ -2,7 +2,7 @@
   "name": "numa-extension",
   "version": "0.0.0",
   "private": true,
-  "description": "Translate selected text and ask AI about it.",
+  "description": "AI agent panel for working with web page content.",
   "type": "module",
   "scripts": {
     "dev": "wxt",

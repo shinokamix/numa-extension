@@ -1,38 +1,37 @@
 # Numa
 
-Numa is a WXT browser extension for translating selected text and asking AI questions about it. It uses React, TypeScript, Tailwind CSS, and Feature-Sliced Design.
+Numa is a browser extension for an AI agent panel that works with web page content.
 
 ## Development
 
-Install dependencies:
+Install the dependencies:
 
 ```bash
 pnpm install
 ```
 
-Run a development build:
+Start the development watcher for your browser:
 
 ```bash
-pnpm dev
-pnpm dev:firefox
+pnpm dev          # Chrome
+pnpm dev:firefox  # Firefox
 ```
 
-## Checks
+Run all formatting, lint, architecture, type, and test checks:
 
 ```bash
-pnpm format:check  # Prettier
-pnpm lint          # ESLint code and runtime policies
-pnpm lint:arch     # Steiger FSD architecture checks
-pnpm typecheck     # TypeScript
-pnpm test:run      # Vitest
-pnpm check         # All checks above
+pnpm check
 ```
 
-Production builds:
+Build the extension:
 
 ```bash
-pnpm build
-pnpm build:firefox
+pnpm build          # Chrome
+pnpm build:firefox  # Firefox
 ```
 
-WXT composition roots live in `src/entrypoints`. The options entrypoint owns router bootstrap and file-route composition, while route-level UI lives in focused `src/pages` slices. Single-owner support stays local and moves to `src/shared` only after genuine independent reuse. See [`docs/architecture.md`](docs/architecture.md) for ownership, dependency, public-API, and browser-runtime rules. See [`DESIGN.md`](DESIGN.md) before changing UI components or tokens.
+## Project structure
+
+Numa uses WXT, React, TypeScript, Tailwind CSS, and Feature-Sliced Design. Source code lives in `src/`. WXT entrypoints live in `src/entrypoints`.
+
+Read [`docs/architecture.md`](docs/architecture.md) before you change project boundaries. Read [`DESIGN.md`](DESIGN.md) before you change UI components or design tokens.

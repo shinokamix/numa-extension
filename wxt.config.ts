@@ -21,7 +21,7 @@ export default defineConfig({
   }),
   manifest: {
     name: 'Numa',
-    description: 'Translate selected text and ask AI about it.',
+    description: 'AI agent panel for working with web page content.',
     permissions: ['storage'],
   },
 });
