@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { CodeIcon, SettingsIcon, SparklesIcon } from 'lucide-react';
+import { BotIcon, CodeIcon, SettingsIcon, SparklesIcon } from 'lucide-react';
 
 import { settingsNavigation } from '../model/navigation';
 import {
@@ -15,6 +15,7 @@ import {
 } from './sidebar';
 
 const navigationIcons = {
+  bot: BotIcon,
   settings: SettingsIcon,
 } as const;
 
@@ -43,7 +44,7 @@ export function SettingsSidebar() {
 
                 return (
                   <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton asChild isActive tooltip={item.title}>
+                    <SidebarMenuButton asChild tooltip={item.title}>
                       <Link
                         to={item.to}
                         activeOptions={{ exact: true, includeSearch: false }}

@@ -8,7 +8,7 @@ export function SettingsLayout() {
   return (
     <SidebarProvider>
       <SettingsSidebar />
-      <SidebarInset aria-labelledby="general-settings-heading">
+      <SidebarInset aria-label="Settings content">
         <SettingsHeader />
         <div className="flex-1 p-6 md:p-10">
           <div className="mx-auto max-w-3xl">

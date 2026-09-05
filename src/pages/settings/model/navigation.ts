@@ -5,4 +5,10 @@ export const settingsNavigation = [
     to: '/',
     icon: 'settings',
   },
+  {
+    id: 'providers',
+    title: 'Providers',
+    to: '/providers',
+    icon: 'bot',
+  },
 ] as const;
