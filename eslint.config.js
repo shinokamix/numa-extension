@@ -62,7 +62,6 @@ export default tseslint.config(
     },
     rules: {
       ...asErrors(eslintPluginTailwindcss.configs.recommended.rules),
-      'tailwindcss/classnames-order': 'off',
       'tailwindcss/no-custom-classname': 'error',
     },
   },
@@ -254,10 +253,6 @@ export default tseslint.config(
     files: testFiles,
     rules: {
       ...vitest.configs.recommended.rules,
-      '@typescript-eslint/no-magic-numbers': 'off',
-      'import-x/no-default-export': 'off',
-      'max-lines-per-function': 'off',
-      'max-statements': 'off',
       'vitest/consistent-test-filename': 'error',
       'vitest/consistent-test-it': ['error', { fn: 'it' }],
       'vitest/consistent-vitest-vi': 'error',
