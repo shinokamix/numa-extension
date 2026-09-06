@@ -1,7 +1,9 @@
 // Source code: https://ui.shadcn.com/r/styles/new-york-v4/empty.json
 // Adaptations:
 // 1. Split EmptyTitle into its own file to satisfy Numa's component-per-file rule.
-// 2. Rendered a semantic h2 and passed children explicitly for the accessibility lint rule.
+// 2. Promoted the primitive to Shared after two independent pages started using it.
+// 3. Rendered a semantic h2 and passed children explicitly for the accessibility lint rule.
+
 import type { ComponentProps } from 'react';
 
 import { cn } from '@/shared/lib/cn';

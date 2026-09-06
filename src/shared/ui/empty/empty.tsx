@@ -1,8 +1,9 @@
 // Source code: https://ui.shadcn.com/r/styles/new-york-v4/empty.json
 // Adaptations:
-// 1. Kept only the Empty root in this file to satisfy Numa's component-per-file rule.
-// 2. Placed the component inside its sole page owner and reused Numa's cn utility.
-// 3. Rendered a semantic section element for the 404 message.
+// 1. Split Empty into its own file to satisfy Numa's component-per-file rule.
+// 2. Promoted the primitive to Shared after two independent pages started using it.
+// 3. Rendered a semantic section element.
+
 import type { ComponentProps } from 'react';
 
 import { cn } from '@/shared/lib/cn';

@@ -1,5 +1,6 @@
 import '@/shared/styles';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -15,11 +16,14 @@ if (!root) {
 }
 
 const initialTheme = await initializeTheme();
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <ThemeProvider initialTheme={initialTheme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider initialTheme={initialTheme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
 );

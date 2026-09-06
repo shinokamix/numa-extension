@@ -1,10 +1,6 @@
 import { GhostIcon } from 'lucide-react';
 
-import { Empty } from './empty';
-import { EmptyDescription } from './empty-description';
-import { EmptyHeader } from './empty-header';
-import { EmptyMedia } from './empty-media';
-import { EmptyTitle } from './empty-title';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/shared/ui/empty';
 
 export function NotFoundPage() {
   return (

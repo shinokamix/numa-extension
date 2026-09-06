@@ -1,6 +1,5 @@
 import type { ThemePreference } from '@/entities/preferences';
 import { useTheme } from '@/entities/preferences';
-
 import {
   Select,
   SelectContent,
@@ -8,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './select';
+} from '@/shared/ui/select';
 
 interface ThemeOption {
   value: ThemePreference;

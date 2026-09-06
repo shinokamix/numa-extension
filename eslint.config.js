@@ -134,8 +134,8 @@ export default tseslint.config(
             '**/*.{test,spec}.{js,jsx,ts,tsx}',
             '**/*.config.{js,ts}',
             'eslint.config.js',
-            'src/entities/preferences/model/theme-storage.ts',
           ],
+          whitelist: ['wxt'],
         },
       ],
       'import-x/no-default-export': 'error',
@@ -221,8 +221,9 @@ export default tseslint.config(
   },
   {
     files: [
-      'src/pages/general-settings/ui/select.tsx',
+      'src/pages/providers/ui/{alert,alert-dialog,dialog,field}.tsx',
       'src/pages/settings/ui/{sheet,sidebar,tooltip}.tsx',
+      'src/shared/ui/select/select.tsx',
     ],
     rules: {
       'react/no-multi-comp': 'off',
