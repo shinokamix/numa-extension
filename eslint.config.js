@@ -219,16 +219,6 @@ export default tseslint.config(
     },
   },
   {
-    files: [
-      'src/pages/providers/ui/{alert,alert-dialog,dialog,field}.tsx',
-      'src/pages/settings/ui/{sheet,sidebar,tooltip}.tsx',
-      'src/shared/ui/select/select.tsx',
-    ],
-    rules: {
-      'react/no-multi-comp': 'off',
-    },
-  },
-  {
     ...react.configs.flat['jsx-runtime'],
     files: ['**/*.{jsx,tsx}'],
   },

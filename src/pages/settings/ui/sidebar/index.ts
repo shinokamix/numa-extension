@@ -1,0 +1,12 @@
+export { SidebarContent } from './sidebar-content';
+export { useSidebar } from './sidebar-context';
+export { SidebarFooter } from './sidebar-footer';
+export { SidebarGroup } from './sidebar-group';
+export { SidebarHeader } from './sidebar-header';
+export { SidebarInset } from './sidebar-inset';
+export { SidebarMenu } from './sidebar-menu';
+export { SidebarMenuButton } from './sidebar-menu-button';
+export { SidebarMenuItem } from './sidebar-menu-item';
+export { SidebarProvider } from './sidebar-provider';
+export { Sidebar } from './sidebar-root';
+export { SidebarTrigger } from './sidebar-trigger';
