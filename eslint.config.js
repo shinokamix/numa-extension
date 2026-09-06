@@ -415,12 +415,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/pages/settings/ui/sidebar.tsx'],
-    rules: {
-      'max-lines': ['error', { max: 350, skipBlankLines: true, skipComments: true }],
-    },
-  },
-  {
     files: ['src/shared/lib/cn/cn.ts'],
     rules: {
       'tailwindcss/no-custom-classname': 'off',
